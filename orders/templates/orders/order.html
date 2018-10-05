@@ -1,0 +1,12 @@
+{% extends 'orders/base.html' %}
+{% block title %}
+    Order {{ order.id }}
+{% endblock title %}
+{% block body %}
+    <ul>
+            <li><span id="order" class=".order">Order Name: </span>{{ order.name }}</li>
+            <li>Address: {{ order.address }}</li>
+            <li>Total: ${{ order.total }}</li>
+    </ul>
+    <a href="{% url 'index' %>Back to all orders</a>
+{% endblock body %}
