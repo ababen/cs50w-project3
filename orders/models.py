@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Pizza(models.Model):
-    name = models.CharField(max_length=64)
+    pizza_name = models.CharField(max_length=64)
     category = models.CharField(max_length=64)
     small = models.DecimalField(max_digits=5, decimal_places=2)
     large = models.DecimalField(max_digits=5, decimal_places=2)
@@ -13,7 +13,7 @@ class Pizza(models.Model):
 
 
 class Toppings(models.Model):
-    name = models.CharField(max_length=64)
+    toppings_name = models.CharField(max_length=64)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     pizza = models.ManyToManyField(Pizza, blank=True, related_name="toppings")
 
@@ -22,7 +22,7 @@ class Toppings(models.Model):
 
 
 class Orders(models.Model):
-    name = models.CharField(max_length=64)
+    order_name = models.CharField(max_length=64)
     address = models.CharField(max_length=64)
     total = models.DecimalField(max_digits=5, decimal_places=2)
 
