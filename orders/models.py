@@ -7,18 +7,19 @@ class Pizza(models.Model):
     category = models.CharField(max_length=64)
     small = models.DecimalField(max_digits=5, decimal_places=2)
     large = models.DecimalField(max_digits=5, decimal_places=2)
+    ToppingCost = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    toppings = models.ForeignKey(Toppings,  blank=True, null=True, related_name="toppings"))
 
     def __str__(self):
-        return f"{self.name} {self.category}"
+        return f"{self.pizza_name} {self.category}"
 
 
 class Toppings(models.Model):
     toppings_name = models.CharField(max_length=64)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
-    pizza = models.ManyToManyField(Pizza, blank=True, related_name="toppings")
+    pizza = models.ManyToManyField(Pizza, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.name} {self.price}"
+        return f"{self.toppings_name}"
 
 
 class Orders(models.Model):
@@ -27,7 +28,7 @@ class Orders(models.Model):
     total = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
-        return f"{self.id} - {self.name} at {self.address}. Total ${self.total}"
+        return f"{self.id} - {self.order_name} at {self.address}. Total ${self.total}"
 
 
 class OrderItems(models.Model):
