@@ -1,9 +1,15 @@
-<!DOCTYPE html>
-    <html>
-        <head>
-            <title>Pizza</title>
-        </head>
-        <body>
-            <h1>Pizza</h1>
-        </body>
-    </html>
+{% extends "orders/base.html" %}
+
+{% block title %}
+    Menu
+{% endblock %}
+{% block body %}
+<p>This is some text.</p>
+    <ul class=".menu-item">
+        {% for pizza in pizza %}
+            <li>
+                <a href="{% url 'pizza' pizza.id %}">{{ pizza }}</a>
+            </li>
+        {% endfor %}
+{% endblock %}
+
