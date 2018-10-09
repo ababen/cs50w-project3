@@ -15,7 +15,7 @@ class Pizza(models.Model):
 
 
 class Toppings(models.Model):
-    toppings_name = models.CharField(max_length=64)
+    toppings_name = models.CharField(max_length=64) # Change to singular
     fk_pizza = models.ManyToManyField(Pizza, blank=True)
 
     def __str__(self):

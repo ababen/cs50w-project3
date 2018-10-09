@@ -1,10 +1,28 @@
 {% extends 'pizza/base.html' %}
-{% block title %}
-    Pizza {{ pizza.pizza_name }}
-{% endblock title %}
+
+{% block title %}Pizza {{ pizza.pizza_name }}{% endblock title %}
+
 {% block body %}
-    <ul>
-            <li><span id="order" class=".pizza-single">Item Name: </span>{{ pizza.pizza_name }}</li>
-    </ul>
-    <a href="{% url 'index' %}">Back to all menu</a>
-{% endblock body %}
+<ul>
+    <li><span id="order" class=".pizza-single">Item Name: </span>{{ pizza.pizza_name }}</li>
+</ul>
+<br>
+<h2>Toppings</h2>
+<ul>
+    {% for toppings in toppings %}
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <li>
+                <div class="input-group-text">
+                    <input type="checkbox" aria-label="{{ toppings.toppings_name }}">{{ toppings.toppings_name }}<br>
+                </div>
+            </li>
+        </div>
+    </div>
+
+    {% endfor %}
+    <button type="button" class="btn btn-primary">Add</button>
+        <br>
+        <button type="button" class="btn btn-secondary" href="{% url 'index' %}">Back To Menu</button><br>
+        <a href="{% url 'index' %}">Back to all menu</a>
+        {% endblock body %}

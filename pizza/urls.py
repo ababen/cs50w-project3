@@ -22,5 +22,5 @@ urlpatterns = [
     path("", include("orders.urls")),
     path("admin/", admin.site.urls),
     path("pizza/", views.index, name="index"),
-    path("pizza/<int:pizza_id>", views.index, name="pizza"),
+    path("pizza/<int:pizza_id>", views.pizza, name="pizza"),
 ]

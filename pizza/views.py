@@ -1,7 +1,7 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
-from orders.models import Pizza
+from orders.models import Pizza, Toppings
 
 # Create your views here.
 def index(request):
@@ -16,6 +16,7 @@ def pizza(request, pizza_id):
     except Pizza.DoesNotExist:
         raise Http404("Pizza does not exist.")
     context = {
-        "pizza": pizza
+        "pizza": pizza,
+        "toppings": Toppings.objects.all()
     }
     return render(request, "pizza/pizza.html", context)
