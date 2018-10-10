@@ -6,9 +6,9 @@ from django.db import models
 class Pizza(models.Model):
     pizza_name = models.CharField(max_length=64)
     category = models.CharField(max_length=64)
-    small = models.DecimalField(max_digits=5, decimal_places=2)
-    large = models.DecimalField(max_digits=5, decimal_places=2)
-    ToppingCost = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    small = models.IntegerField()
+    large = models.IntegerField()
+    ToppingCost = models.IntegerField(null=True)
     # fk_toppings = models.ForeignKey('Toppings', on_delete=models.PROTECT, related_name="toppings")
     class Meta:
         verbose_name = "pizza"

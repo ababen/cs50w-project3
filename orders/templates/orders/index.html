@@ -12,6 +12,30 @@
     {{ message}}
   </div>
 {% endif %}
+<h4>Pizza</h4>
+<table>
+  <tbody>
+      <tr>
+        <td>Pizza Name</td>
+        <td>Category</td>
+        <td>Small</td>
+        <td>Large</td>
+        <td>Action</td>
+      </tr>
+      {% regroup pizza by Category as pizza_list %}
+      {% for pizza in pizza %}
+      <tr>
+        <td><a href="{% url 'pizza' pizza.id %}">{{ pizza.pizza_name }}</a></td>
+        <td>{{ pizza.category }}</td>
+        <td>{{ pizza.small }}</td>
+        <td>{{ pizza.large }}</td>
+        <td><a href="">Add To Cart</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+<br>
+<h4>Subs</h4>
 <table>
   <tbody>
       <tr>

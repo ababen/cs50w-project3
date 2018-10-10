@@ -80,8 +80,13 @@ def register2(request):
 # How to redirect users
 # return HttpResponseRedirect(reverse("flight", args=(flight_id)))
 
-# def addtocart(request):
-    # return render(request, "")
+def addtocart(request):
+    cart_contents = {}
+    return render(request, "")
+
+
+def cart(request):
+    return render(request, "")
 
 def pizza(request, pizza_id):
     try:
