@@ -22,7 +22,6 @@
         <td>Large</td>
         <td>Action</td>
       </tr>
-      {% regroup pizza by Category as pizza_list %}
       {% for pizza in pizza %}
       <tr>
         <td><a href="{% url 'pizza' pizza.id %}">{{ pizza.pizza_name }}</a></td>
@@ -45,17 +44,23 @@
         <td>Large</td>
         <td>Action</td>
       </tr>
-      {% for pizza in pizza %}
+      {% for subs in subs %}
       <tr>
-        <td><a href="{% url 'pizza' pizza.id %}">{{ pizza.pizza_name }}</a></td>
-        <td>{{ pizza.category }}</td>
-        <td>{{ pizza.small }}</td>
-        <td>{{ pizza.large }}</td>
+        <td><a href="{% url 'pizza' subs.id %}">{{ subs.pizza_name }}</a></td>
+        <td>{{ subs.category }}</td>
+        <td>{{ subs.small }}</td>
+        <td>{{ subs.large }}</td>
         <td><a href="">Add To Cart</a></td>
       </tr>
       {% endfor %}
     </tbody>
 </table>
 {% endblock %}
+<!-- 
+  
+Other Pizza category options are: Pasta, Salads. Dinner Platters
+Perhaps I can use SPA methods to load different dishes into index.html
+
+-->
 
 <!-- #{% url 'addtocart' pizza.id %} -->

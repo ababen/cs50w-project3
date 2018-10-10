@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import Orders, Pizza
+from .models import Orders, Pizza, Toppings
 
 # Create your views here.
 def index(request):
@@ -12,7 +12,8 @@ def index(request):
 #    if not request.user.is_authenticated:
 #        return render(request, "orders/login.html", {"message: None"})
     context = {
-        "pizza": Pizza.objects.all()
+        "pizza": Pizza.objects.all().filter(category__contains='Pizza'),
+        "subs": Pizza.objects.all().filter(category='Subs')
     }
     return render(request, "orders/index.html", context)
 
@@ -93,8 +94,12 @@ def pizza(request, pizza_id):
         pizza = Pizza.objects.get(pk=pizza_id)
     except Pizza.DoesNotExist:
         raise Http404("Pizza or food does not exist.")
+    
+    toppings = Toppings.objects.all()
+
     context = {
-        "pizza": pizza
+        "pizza": pizza,
+        "toppings": toppings
     }
     return render(request, "pizza/pizza.html", context)
 

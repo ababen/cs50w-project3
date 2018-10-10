@@ -10,6 +10,7 @@ class Pizza(models.Model):
     large = models.IntegerField()
     ToppingCost = models.IntegerField(null=True)
     # fk_toppings = models.ForeignKey('Toppings', on_delete=models.PROTECT, related_name="toppings")
+    
     class Meta:
         verbose_name = "pizza"
         verbose_name_plural = "pizzas"

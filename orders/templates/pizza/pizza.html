@@ -6,6 +6,17 @@
     <ul>
             <!-- <li><span id="order" class=".pizza-single">Item Name: </span>{{ pizza.pizza_name }}</li> -->
             <li><span>Item Name: </span>{{ pizza.pizza_name }}</li>
+            <li>{{ pizza.small }}</li>
+            <li>{{ pizza.large }}</li>
     </ul>
+    <h2>Toppings</h2>
+    {% for topping in toppings %}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="{{ topping.id }}">{{ topping.toppings_name }}</label>
+        </div>
+    {% endfor %}
+    <br>
+    <submit>
     <a href="{% url 'index' %}">Back to all menu</a>
 {% endblock body %}
