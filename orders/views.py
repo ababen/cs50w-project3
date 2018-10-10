@@ -18,19 +18,22 @@ def index(request):
 
 
 def login_view(request):
-    try:
-        username = request.POST["username"]
-    except KeyError:
-        return render(request, "orders/login.html", {"message": "No username entered."})
+    # try:
+    # username = request.POST["username"]
+    # except KeyError:
+    #    return render(request, "orders/login.html", {"message": "No username entered."})
+    return render(request, "orders/login.html", {"message":None})
 
+
+def login_action(request):
+    username = request.POST["username"]
     password = request.POST["password"]
-    user = authenticated(request, username=username, password=password)
+    user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "orders/login.html", {"message":"Invalid credentials."})
-
 
 def logout_view(request):
     logout(request)
@@ -39,6 +42,34 @@ def logout_view(request):
 
 def register(request):
     return render(request, "orders/register.html")
+
+def adduser(request):
+    registration = {}
+    registration['firstname'] = request.POST["firstname"]
+    registration['email'] = request.POST["email"]
+    registration['password'] = request.POST["password"]
+
+    # registration['lastname'] = request.POST["lastname"]
+    # registration['address'] = request.POST["address"]
+    # registration['city'] = request.POST["city"]
+    # registration['state'] = request.POST["state"]
+    # registration['zip'] = request.POST["zip"]
+    # registration['phonenumber'] = request.POST["phonenumber"]
+    # registration['username'] = request.POST["username"]
+
+    #TypeError possible
+
+    user = User.objects.create_user(registration['firstname'], registration['email'], registration['password'])
+    user.lastname = request.POST["lastname"]
+    user.address = request.POST["address"]
+    user.city = request.POST["city"]
+    user.state = request.POST["state"]
+    user.zip = request.POST["zip"]
+    user.phone = request.POST["phonenumber"]
+    user.username = request.POST["username"]
+    user.save()
+    return render(request, "orders/index.html",{"message":"User saved successfully."})
+
 
 def register2(request):
     try:

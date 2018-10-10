@@ -7,19 +7,19 @@
 <h2>Register</h2>
 
 <div>
-  <form action="{ url 'register' }" method="post">
+  <form action="{% url 'adduser' %}" method="post">
     {% csrf_token %}
-    <input type="text" id="firstname" placeholder="First Name" autofocus required><br>
-    <input type="text" id="lastname" placeholder="Last Name"><br>
-    <input type="text" id="address" placeholder="Street Address"><br>
-    <input type="text" id="city" placeholder="City"><br>
-    <input type="text" id="state" placeholder="State"><br>
-    <input type="text" id="zip" placeholder="Zip"><br>
-    <input type="text" id="phonenumber" placeholder="Phone Number"><br>
-    <input type="text" id="email" placeholder="Email"><br><br>
-    <input type="text" id="username" placeholder="Username"><br>
-    <input type="text" id="password" placeholder="Password"><br>
-    <input type="submit" id="submit" value="Register"><br>
+    <input type="text" name="firstname" placeholder="First Name" autofocus required><br>
+    <input type="text" name="lastname" placeholder="Last Name"><br>
+    <input type="text" name="address" placeholder="Street Address"><br>
+    <input type="text" name="city" placeholder="City"><br>
+    <input type="text" name="state" placeholder="State"><br>
+    <input type="text" name="zip" placeholder="Zip"><br>
+    <input type="text" name="phonenumber" placeholder="Phone Number"><br>
+    <input type="text" name="email" placeholder="Email"><br><br>
+    <input type="text" name="username" placeholder="Username"><br>
+    <input type="text" name="password" placeholder="Password"><br>
+    <input type="submit" name="submit" value="Register"><br>
   </form>
 </div>
 {% endblock %}
