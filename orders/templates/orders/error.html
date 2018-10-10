@@ -1,0 +1,18 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block body %}
+
+<h2>Message</h2><br>
+
+{% if message %}
+  <div>
+    {{ message}}
+  </div>
+
+{% endif %}
+
+{% endblock %}

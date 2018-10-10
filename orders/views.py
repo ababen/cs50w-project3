@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -83,7 +85,19 @@ def register2(request):
 
 def addtocart(request):
     cart_contents = {}
-    return render(request, "")
+    resp = request.GET
+    data = json.load(resp)
+    # cart_contents.update
+    # cart_contents['item'] = request.POST["state"]
+    # cart_contents['qty'] = 1
+    # cart_contents['price'] = 10
+    # cart_contents['toppings']
+    # sample[1:] = sample['toppings']
+    # cart_contents['item'] = cart_items['pizza']
+    # cart_contents['price'] = '0'
+    # cart_contents['toppings'] = cart_items['toppings']
+
+    return render(request, "orders/error.html", {"message": data})
 
 
 def cart(request):

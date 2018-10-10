@@ -10,13 +10,18 @@
             <li>{{ pizza.large }}</li>
     </ul>
     <h2>Toppings</h2>
+    <form action="{% url 'addtocart' %}" method="GET">
+    {% csrf_token %}
+    <input type="hidden" name="pizza" value="{{ pizza.id }}">
     {% for topping in toppings %}
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <input class="form-check-input" type="checkbox" value="{{ topping.id }}" name="toppings" id="{{ topping.toppings_name }}">
             <label class="form-check-label" for="{{ topping.id }}">{{ topping.toppings_name }}</label>
         </div>
     {% endfor %}
     <br>
-    <submit>
+    <input type="submit">
+    </form>
+    <br>
     <a href="{% url 'index' %}">Back to all menu</a>
 {% endblock body %}
