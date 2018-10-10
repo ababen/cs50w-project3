@@ -1,10 +1,11 @@
-{% extends 'pizza/base.html' %}
+{% extends 'orders/base.html' %}
 {% block title %}
     Pizza {{ pizza.pizza_name }}
 {% endblock title %}
 {% block body %}
     <ul>
-            <li><span id="order" class=".pizza-single">Item Name: </span>{{ pizza.pizza_name }}</li>
+            <!-- <li><span id="order" class=".pizza-single">Item Name: </span>{{ pizza.pizza_name }}</li> -->
+            <li><span>Item Name: </span>{{ pizza.pizza_name }}</li>
     </ul>
     <a href="{% url 'index' %}">Back to all menu</a>
 {% endblock body %}

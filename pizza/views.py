@@ -10,12 +10,4 @@ def index(request):
     }
     return render(request, "pizza/index.html", context)
 
-def pizza(request, pizza_id):
-    try:
-        pizza = Pizza.objects.get(pk=pizza_id)
-    except Pizza.DoesNotExist:
-        raise Http404("Pizza does not exist.")
-    context = {
-        "pizza": pizza
-    }
-    return render(request, "pizza/pizza.html", context)
+# Need to redict to home page

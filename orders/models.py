@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+# Pizza model
 class Pizza(models.Model):
     pizza_name = models.CharField(max_length=64)
     category = models.CharField(max_length=64)
@@ -9,11 +10,14 @@ class Pizza(models.Model):
     large = models.DecimalField(max_digits=5, decimal_places=2)
     ToppingCost = models.DecimalField(max_digits=5, decimal_places=2, null=True)
     # fk_toppings = models.ForeignKey('Toppings', on_delete=models.PROTECT, related_name="toppings")
+    class Meta:
+        verbose_name = "pizza"
+        verbose_name_plural = "pizzas"
 
     def __str__(self):
         return f"{self.pizza_name} {self.category} {self.small} {self.large} {self.ToppingCost}"
 
-
+# Toppings options
 class Toppings(models.Model):
     toppings_name = models.CharField(max_length=64)
     fk_pizza = models.ManyToManyField(Pizza, blank=True)
@@ -21,17 +25,25 @@ class Toppings(models.Model):
     def __str__(self):
         return f"{self.toppings_name}"
 
+    class Meta:
+        verbose_name = "topping"
+        verbose_name_plural = "toppings"
 
+# Holds Orders 
 class Orders(models.Model):
     order_name = models.CharField(max_length=64)
     address = models.CharField(max_length=64)
     total = models.DecimalField(max_digits=5, decimal_places=2)
-    
+
     # Add timestamp to orders
-    
+
     def __str__(self):
         return f"{self.order_name} at {self.address}. Total ${self.total}"
-    
+
+    class Meta:
+        verbose_name = "order"
+        verbose_name_plural = "orders"
+
 
 #class OrderItems(models.Model):
 #    fk_order = models.ForeignKey(Orders, on_delete=models.PROTECT)

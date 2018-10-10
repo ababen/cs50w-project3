@@ -1,0 +1,23 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+    Login
+{% endblock %}
+{% block body %}
+
+<h2>Login</h2>
+{% if message %}
+  <div>
+    {{ message}}
+  </div>
+{% endif %}
+<div>
+  <form action="{ url 'login' }" method="post">
+    {% csrf_token %}
+    <input type="text" id="username" type="text" placeholder="username"><br>
+    <input type="text" id="password" type="text" placeholder="Password"><br>
+    <!-- Change type="password" -->
+    <input type="submit" id="submit" value="Login"><br>
+  </form>
+</div>
+{% endblock %}
