@@ -86,8 +86,8 @@ def register2(request):
 def addtocart(request):
     cart_contents = {}
     resp = request.GET
-    data = json.load(resp)
-    # cart_contents.update
+    data = resp.copy()
+    # cart_contents.extend = data
     # cart_contents['item'] = request.POST["state"]
     # cart_contents['qty'] = 1
     # cart_contents['price'] = 10
