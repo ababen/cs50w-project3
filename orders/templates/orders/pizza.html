@@ -1,65 +1,59 @@
 {% extends 'orders/base.html' %}
 {% load humanize %}
-
 {{ floatvalue|floatformat:2|intcomma }}
 
-{% load static %}
-{% static 'pizza.css' %}
-{% static 'pizza.js' %}
-
-
-<link rel="stylesheet" href="pizza.css">
-<script src="pizza.js"></script>
-
 {% block title %}
-Pizza {{ pizza.pizza_name }}
+  {{ pizza.pizza_name }}
 {% endblock title %}
 {% block body %}
-<div class="container">
-<div class="products">
-<ul>
-  <!-- <li><span id="order" class=".pizza-single">Item Name: </span>{{ pizza.pizza_name }}</li> -->
-  <li><span>Item Name: </span>{{ pizza.pizza_name }}</li>
-  {% if pizza.small > 0 %}
-  <li>
-    ${{ pizza.small|stringformat:"1.2f" }}
-  </li>
-  {% endif %}
-  {% if pizza.large > 0 %}
-  <li>
-    ${{ pizza.large|stringformat:"1.2f" }}
-  </li>
-  {% endif %}
-</ul>
-</div><!-- products -->
-<h2>Toppings</h2>
-<form action="{% url 'addtocart' %}" method="GET">
-  {% csrf_token %}
-  <input type="hidden" name="id" value="{{ pizza.id }}">
-  <input type="hidden" name="name" value="{{ pizza.pizza_name }}">
-  <input type="hidden" name="price" value="{{ pizza.large }}">
+  <div class="container">
+  <div class="products">
+  <ul>
+    <!-- <li><span id="order" class=".pizza-single">Item Name: </span>{{ pizza.pizza_name }}</li> -->
+    <li><span>Item Name: </span>{{ pizza.pizza_name }}</li>
+    {% if pizza.small > 0 %}
+    <li>
+      ${{ pizza.small|stringformat:"1.2f" }}
+    </li>
+    {% endif %}
+    {% if pizza.large > 0 %}
+    <li>
+      ${{ pizza.large|stringformat:"1.2f" }}
+    </li>
+    {% endif %}
+  </ul>
+  </div><!-- products -->
+  <h2>Toppings</h2>
+  <form name="form1" action="{% url 'addtocart' %}" method="GET">
+    {% csrf_token %}
+    <input type="hidden" name="id" class="form-check-input" value="{{ pizza.id }}">
+    <input type="hidden" name="name" class="form-check-input" value="{{ pizza.pizza_name }}">
+    <input type="hidden" name="price" class="form-check-input" value="{{ pizza.large }}">
 
-  {% for topping in toppings %}
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="{{ topping.id }}" name="toppings" id="{{ topping.toppings_name }}">
-    <label class="form-check-label" for="{{ topping.id }}">{{ topping.toppings_name }}</label>
-  </div>
-  {% endfor %}
+    {% for topping in toppings %}
+    
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="{{ topping.id }}" name="toppings" id="{{ topping.toppings_name }}">
+        <label class="form-check-label" for="{{ topping.id }}">{{ topping.toppings_name }}</label>
+      </div>
+    
+    {% endfor %}
+    <br>
+    <input type="submit" value="Add To Cart">
+
+  </form>
+  <div class="shopping-cart">
+          <div class="shopping-cart-head">
+              <span class="product-quantity">0</span> Product(s) in Cart
+          </div>
+          <ul class="shopping-cart-list">
+          </ul>
+          <div class="cart-buttons">
+              <a href="#0" class="button empty-cart-btn">Empty</a>
+              <a href="#0" class="button cart-checkout">Checkout - <span class="total-price">$0</span></a>
+          </div>
+      </div>
+  </div><!-- container -->
   <br>
-  <input type="submit">
-</form>
-<div class="shopping-cart">
-        <div class="shopping-cart-head">
-            <span class="product-quantity">0</span> Product(s) in Cart
-        </div>
-        <ul class="shopping-cart-list">
-        </ul>
-        <div class="cart-buttons">
-            <a href="#0" class="button empty-cart-btn">Empty</a>
-            <a href="#0" class="button cart-checkout">Checkout - <span class="total-price">$0</span></a>
-        </div>
-    </div>
-</div><!-- container -->
-<br>
-<a href="{% url 'index' %}">Back to all menu</a>
-{% endblock body %}
+  <a href="{% url 'index' %}">Back to all menu</a>
+  {% endblock body %}
