@@ -1,9 +1,13 @@
-{% extends 'pizza/base.html' %}
+{% extends 'orders/base.html' %}
 {% load humanize %}
 
 {{ floatvalue|floatformat:2|intcomma }}
 
 {% load static %}
+{% static 'pizza.css' %}
+{% static 'pizza.js' %}
+
+
 <link rel="stylesheet" href="pizza.css">
 <script src="pizza.js"></script>
 
@@ -31,7 +35,10 @@ Pizza {{ pizza.pizza_name }}
 <h2>Toppings</h2>
 <form action="{% url 'addtocart' %}" method="GET">
   {% csrf_token %}
-  <input type="hidden" name="pizza" value="{{ pizza.id }}">
+  <input type="hidden" name="id" value="{{ pizza.id }}">
+  <input type="hidden" name="name" value="{{ pizza.pizza_name }}">
+  <input type="hidden" name="price" value="{{ pizza.large }}">
+
   {% for topping in toppings %}
   <div class="form-check">
     <input class="form-check-input" type="checkbox" value="{{ topping.id }}" name="toppings" id="{{ topping.toppings_name }}">

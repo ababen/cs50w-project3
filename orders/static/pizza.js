@@ -9,6 +9,17 @@ var ShoppingCart = (function($) {
         cartCheckoutEl = document.querySelector(".cart-checkout"),
         totalPriceEl = document.querySelector(".total-price");
     
+    // Initialize new request
+    const request = new XMLHttpRequest();
+    request.open('POST', '/convert');
+    const data = JSON.parse(request.responseText);
+    /* <QueryDict: {'csrfmiddlewaretoken': ['5cZva82xZOb55tuRAtDq9UDZ5Xesb15cncFfOmMIWKCsadPlss4blKGJGDQJNM14'], 
+                'id': ['20'], 
+                'name': ['Steak + Cheese'], 
+                'price': ['6.95'], 
+                'toppings': ['5']
+              }> */
+
     // Fake JSON data array here should be API call
     var products = [
       {
@@ -62,10 +73,8 @@ var ShoppingCart = (function($) {
         var productEl = document.createElement("div");
         productEl.className = "product";
         productEl.innerHTML = `<div class="product-image">
-                                  <img src="${item.imageUrl}" alt="${item.name}">
                                </div>
                                <div class="product-name"><span>Product:</span> ${item.name}</div>
-                               <div class="product-description"><span>Description:</span> ${item.description}</div>
                                <div class="product-price"><span>Price:</span> ${item.price} $</div>
                                <div class="product-add-to-cart">
                                  <a href="#0" class="button see-more">More Details</a>
@@ -73,7 +82,7 @@ var ShoppingCart = (function($) {
                                </div>
                             </div>
   `;
-                               
+  // <img src="$item.imageUrl" alt="$item.name">                        
   productsEl.appendChild(productEl);
       });
     }
@@ -168,4 +177,4 @@ var ShoppingCart = (function($) {
     // I have included jQuery although I haven't used it
   })(jQuery);
   
-  ShoppingCart.init();
+ShoppingCart.init();
