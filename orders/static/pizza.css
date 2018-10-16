@@ -3,15 +3,11 @@
 }
 
 body {
-  background-color: coral;
-}
-
-body {
-  margin: 0;
-  padding: 0;
+  margin: 10px;
+  padding: 10px;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
-  background: cornsilk;
+  background-color: lightblue;
   color: #333;
 }
 
