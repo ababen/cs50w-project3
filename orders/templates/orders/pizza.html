@@ -47,6 +47,32 @@
   <p id="result"></p>
 
 <script>
+
+// Cache necesarry DOM Elements
+var productsEl = document.querySelector(".products"),
+    cartEl =     document.querySelector(".shopping-cart-list"),
+    productQuantityEl = document.querySelector(".product-quantity"),
+    emptyCartEl = document.querySelector(".empty-cart-btn"),
+    cartCheckoutEl = document.querySelector(".cart-checkout"),
+    totalPriceEl = document.querySelector(".total-price");
+}
+
+// Like one before and I have also used ES6 template strings
+var generateCartList = function() {
+  
+  cartEl.innerHTML = "";
+  
+  //productsInCart.forEach(function(item) {
+    var li = document.createElement("li");
+    li.innerHTML = "product";
+    //`${item.quantity} ${item.product.name} - $${item.product.price * item.quantity}`;
+    cartEl.appendChild(li);
+  };
+  
+  // productQuantityEl.innerHTML = productsInCart.length;
+  
+  // generateCartButtons()
+
 function myFunction() {
     var x = document.forms[0];
     var txt = "";
