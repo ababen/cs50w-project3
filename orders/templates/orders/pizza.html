@@ -6,7 +6,17 @@
 {{ pizza.pizza_name }}
 {% endblock title %}
 {% block body %}
-
+<div class="shopping-cart"><!-- shopping cart -->
+  <div class="shopping-cart-head">
+    <span class="product-quantity">0</span> Product(s) in Cart
+  </div>
+  <ul class="shopping-cart-list">
+  </ul>
+  <div class="cart-buttons">
+    <a href="#0" class="button empty-cart-btn">Empty</a>
+    <a href="#0" class="button cart-checkout">Checkout - <span class="total-price">$0</span></a>
+  </div>
+</div>
 <div class="container">
   <div class="products">
     <ul>
@@ -43,7 +53,7 @@
     {% endfor %}
     <br>
   </form>
-  <button onclick="myFunction()">Add To Cart</button>
+  <button onclick="addtocart()">Add To Cart</button>
   <p id="result"></p>
 
 <script>
@@ -55,50 +65,40 @@ var productsEl = document.querySelector(".products"),
     emptyCartEl = document.querySelector(".empty-cart-btn"),
     cartCheckoutEl = document.querySelector(".cart-checkout"),
     totalPriceEl = document.querySelector(".total-price");
-}
 
 // Like one before and I have also used ES6 template strings
-var generateCartList = function() {
-  
-  cartEl.innerHTML = "";
-  
+var generateCartList = function(product) {
+
+  //document.querySelector(".shopping-cart-list").innerHTML = "";
+
   //productsInCart.forEach(function(item) {
     var li = document.createElement("li");
-    li.innerHTML = "product";
-    //`${item.quantity} ${item.product.name} - $${item.product.price * item.quantity}`;
-    cartEl.appendChild(li);
+    li.innerHTML = '{{ pizza.pizza_name|safe }} - ${{ pizza.large|stringformat:"1.2f"|safe }}';
+    document.querySelector(".shopping-cart-list").appendChild(li);
   };
-  
-  // productQuantityEl.innerHTML = productsInCart.length;
-  
-  // generateCartButtons()
 
-function myFunction() {
+function addtocart() {
+  var count;
+  if (count == 0) {
+      count = 0
+  }
+  document.querySelector(".product-quantity").innerHTML = count;
+    var product = document.forms[0];
     var x = document.forms[0];
     var txt = "";
     var i;
     for (i = 0; i < x.length; i++) {
-          if (x[i].checked) {
-            txt = txt + x.elements[i].value + "<br>";
-          }
+      txt = txt + x.elements[i].value + "<br>";
+        //if (x[i].checked) {}
     }
     document.getElementById("result").innerHTML = txt;
-    
+    count++;
+    generateCartList(product);
 }
 </script>
-
-  <div class="shopping-cart"><!-- shopping cart -->
-    <div class="shopping-cart-head">
-      <span class="product-quantity">0</span> Product(s) in Cart
-    </div>
-    <ul class="shopping-cart-list">
-    </ul>
-    <div class="cart-buttons">
-      <a href="#0" class="button empty-cart-btn">Empty</a>
-      <a href="#0" class="button cart-checkout">Checkout - <span class="total-price">$0</span></a>
-    </div>
-  </div>
 </div><!-- container -->
+
+
 <br>
 <a href="{% url 'index' %}">Back to all menu</a>
 {% endblock body %}

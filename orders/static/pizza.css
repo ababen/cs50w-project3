@@ -142,3 +142,11 @@ a {
 .cart-checkout {
   background: limegreen;
 }
+
+input[type=checkbox] {
+  transform: scale(2) !important;
+}
+
+div.lp-pom-root .lp-pom-form-field .option  {
+   margin-bottom: 20px !important;
+}
