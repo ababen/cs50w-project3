@@ -1,0 +1,32 @@
+{% extends 'orders/base2.html' %}
+
+{% block javascript %}
+  <script>
+    $("#id_username").change(function () {
+      var form = $(this).closest("form");
+      $.ajax({
+        url: form.attr("data-validate-username-url"),
+        data: form.serialize(),
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            alert(data.error_message);
+            document.querySelector(".error").innerHTML = {{ data.is_taken }};
+          }
+        }
+      });
+
+    });
+  </script>
+{% endblock %}
+
+{% block content %}
+{% if data.error_message %}
+<p class="error">{{ data.error_message }}</p>
+{% endif %}
+  <form method="post" data-validate-username-url="{% url 'validate_username' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
+  </form>
+{% endblock %}

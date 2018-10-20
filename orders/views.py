@@ -1,8 +1,10 @@
 import json
 
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import CreateView
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -14,6 +16,19 @@ def index(request):
         "subs": Pizza.objects.all().filter(category='Subs')
     }
     return render(request, "orders/index.html", context)
+
+class SignUpView(CreateView):
+    template_name = 'orders/signup.html'
+    form_class = UserCreationForm
+
+def validate_username(request):
+    username = request.GET.get('username', None)
+    data = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'A user with this username already exists.'
+    return JsonResponse(data)
 
 def login_view(request):
     # try:
