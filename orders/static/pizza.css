@@ -3,12 +3,11 @@
 }
 
 body {
-  margin: 10px;
+  margin: 5px;
   padding: 10px;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   background-color: lightblue;
-  color: #333;
 }
 
 a {
@@ -23,6 +22,24 @@ a {
   color: white;
   font-size: 12px;
   font-weight: bold;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 310px;
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background: azure;
+}
+
+.menu-row {
+  padding: 10px;
+  max-width: 310px;
+  width: 100%;
 }
 
 .container {
@@ -49,7 +66,7 @@ a {
 }
 
 .header-nav {
-  float: right;
+  float: left;
 }
 
 .header-nav ul li {
@@ -149,4 +166,16 @@ input[type=checkbox] {
 
 div.lp-pom-root .lp-pom-form-field .option  {
    margin-bottom: 20px !important;
+}
+
+.error {
+  color: rgb(0,0,255);
+}
+
+p.error {
+    color: rgb(0,0,255);
+}
+
+span.error {
+  color: rgb(0,0,255);
 }

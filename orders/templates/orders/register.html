@@ -9,17 +9,20 @@
 <div>
   <form action="{% url 'adduser' %}" method="post">
     {% csrf_token %}
-    <input type="text" name="firstname" placeholder="First Name" autofocus required><br>
-    <input type="text" name="lastname" placeholder="Last Name"><br>
-    <input type="text" name="address" placeholder="Street Address"><br>
-    <input type="text" name="city" placeholder="City"><br>
-    <input type="text" name="state" placeholder="State"><br>
-    <input type="text" name="zip" placeholder="Zip"><br>
-    <input type="text" name="phonenumber" placeholder="Phone Number"><br>
-    <input type="text" name="email" placeholder="Email"><br><br>
-    <input type="text" name="username" placeholder="Username"><br>
-    <input type="text" name="password" placeholder="Password"><br>
+    <input type="text" name="firstname" placeholder="First Name" autocomplete="off" autofocus required><br>
+    <input type="text" name="lastname" placeholder="Last Name" autocomplete="off"><br>
+    <input type="text" name="email" placeholder="Email" autocomplete="off"><br><br>
+    <input type="text" name="username" placeholder="Username" autocomplete="off"><br>
+    <input type="text" name="password" placeholder="Password" autocomplete="off"><br>
     <input type="submit" name="submit" value="Register"><br>
   </form>
 </div>
+
+<!--
+<input type="text" name="address" placeholder="Street Address"><br>
+<input type="text" name="city" placeholder="City"><br>
+<input type="text" name="state" placeholder="State"><br>
+<input type="text" name="zip" placeholder="Zip"><br>
+<input type="text" name="phonenumber" placeholder="Phone Number"><br>
+-->
 {% endblock %}

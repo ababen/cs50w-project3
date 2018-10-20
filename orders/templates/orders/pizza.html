@@ -1,11 +1,13 @@
 {% extends 'orders/base.html' %}
 {% load humanize %}
+
 {{ floatvalue|floatformat:2|intcomma }}
 
 {% block title %}
 {{ pizza.pizza_name }}
 {% endblock title %}
 {% block body %}
+
 <div class="shopping-cart"><!-- shopping cart -->
   <div class="shopping-cart-head">
     <span class="product-quantity">0</span> Product(s) in Cart
@@ -17,7 +19,9 @@
     <a href="#0" class="button cart-checkout">Checkout - <span class="total-price">$0</span></a>
   </div>
 </div>
+
 <div class="container">
+
   <div class="products">
     <ul>
       <!-- <li><span id="order" class=".pizza-single">Item Name: </span>{{ pizza.pizza_name }}</li> -->
@@ -33,8 +37,10 @@
       </li>
       {% endif %}
     </ul>
-  </div><!-- products -->
+  </div> <!-- products -->
+
   <h2>Toppings</h2>
+
   <!--<form name="form1" action="*** url 'addtocart' ***" method="GET">-->
   <form name="form1">
     {% csrf_token %}
@@ -66,6 +72,7 @@ var productsEl = document.querySelector(".products"),
     cartCheckoutEl = document.querySelector(".cart-checkout"),
     totalPriceEl = document.querySelector(".total-price");
 
+
 // Like one before and I have also used ES6 template strings
 var generateCartList = function(product) {
 
@@ -78,27 +85,33 @@ var generateCartList = function(product) {
   };
 
 function addtocart() {
-  var count;
-  if (count == 0) {
-      count = 0
+  var toppings = "None";
+  var cart = {"pizza_id": "{{ pizza.id }}", "pizza_price": "{{ pizza.large }}", "pizza_toppings": "toppings"};
+  var cart_json = JSON.stringify(cart);
+  localStorage.setItem("cart", cart);
+  localStorage.setItem("cart_json", cart_json);
+  alert("Ok");
+  return
   }
-  document.querySelector(".product-quantity").innerHTML = count;
-    var product = document.forms[0];
-    var x = document.forms[0];
-    var txt = "";
-    var i;
-    for (i = 0; i < x.length; i++) {
-      txt = txt + x.elements[i].value + "<br>";
+  // document.querySelector(".product-quantity").innerHTML = count;
+  //  var product = document.forms[0];
+  //  var x = document.forms[0];
+  //  var txt = "";
+  //  var i;
+  //  for (i = 0; i < x.length; i++) {
+  //    txt = txt + x.elements[i].value + "<br>";
         //if (x[i].checked) {}
-    }
-    document.getElementById("result").innerHTML = txt;
-    count++;
-    generateCartList(product);
-}
+  //  }
+    //document.getElementById("result").innerHTML = txt;
+    //count++;
+    //generateCartList(product);
+
 </script>
+
 </div><!-- container -->
 
-
 <br>
+
 <a href="{% url 'index' %}">Back to all menu</a>
+
 {% endblock body %}

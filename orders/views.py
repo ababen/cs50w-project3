@@ -8,7 +8,6 @@ from django.urls import reverse
 
 from .models import Orders, Pizza, Toppings
 
-# Create your views here.
 def index(request):
     context = {
         "pizza": Pizza.objects.all().filter(category__contains='Pizza'),
@@ -16,14 +15,12 @@ def index(request):
     }
     return render(request, "orders/index.html", context)
 
-
 def login_view(request):
     # try:
     # username = request.POST["username"]
     # except KeyError:
     #    return render(request, "orders/login.html", {"message": "No username entered."})
     return render(request, "orders/login.html", {"message":None})
-
 
 def login_action(request):
     username = request.POST["username"]
@@ -39,16 +36,13 @@ def logout_view(request):
     logout(request)
     return render(request, "orders/login.html", {"message": "Loged out."})
 
-
 def register(request):
     return render(request, "orders/register.html")
 
 def adduser(request):
-    registration = {}
-    registration['firstname'] = request.POST["firstname"]
-    registration['email'] = request.POST["email"]
-    registration['password'] = request.POST["password"]
-
+    # registration = {}
+    # registration['email'] = request.POST["email"]
+    # registration['password'] = request.POST["password"]
     # registration['lastname'] = request.POST["lastname"]
     # registration['address'] = request.POST["address"]
     # registration['city'] = request.POST["city"]
@@ -59,35 +53,30 @@ def adduser(request):
 
     #TypeError possible
 
-    user = User.objects.create_user(registration['firstname'], registration['email'], registration['password'])
-    user.lastname = request.POST["lastname"]
-    user.address = request.POST["address"]
-    user.city = request.POST["city"]
-    user.state = request.POST["state"]
-    user.zip = request.POST["zip"]
-    user.phone = request.POST["phonenumber"]
-    user.username = request.POST["username"]
+    try:
+        user = User.objects.create_user(request.POST["username"], request.POST["email"], request.POST["password"])
+    except IntegrityError:
+        raise Http404("User already exists.")
+    except NameError:
+        raise Http404("User already exists.")
+
+    user.last_name = request.POST["lastname"]
+    user.first_name = request.POST["firstname"]
     user.save()
-    return render(request, "orders/index.html",{"message":"User saved successfully."})
 
+    context = {
+        "pizza": Pizza.objects.all().filter(category__contains='Pizza'),
+        "subs": Pizza.objects.all().filter(category='Subs'),
+        "users": User.objects.all(),
+        "message": "User created successfully."
+    }
 
-def addtocart(request):
+    return render(request, "orders/index.html", context)
+
+def addtocart(request, cart):
     # if not request.user.is_authenticated:
     #    return render(request, "orders/login.html", {"message: None"})
-    cart_contents = {}
-    resp = request.GET
-    data = resp.copy()
-    # cart_contents.extend = data
-    # cart_contents['item'] = request.POST["state"]
-    # cart_contents['qty'] = 1
-    # cart_contents['price'] = 10
-    # cart_contents['toppings']
-    # sample[1:] = sample['toppings']
-    # cart_contents['item'] = cart_items['pizza']
-    # cart_contents['price'] = '0'
-    # cart_contents['toppings'] = cart_items['toppings']
-    return render(request, "orders/error.html", {"message": data})
-
+    return render(request, "orders/error.html", {"message": cart})
 
 def cart(request):
     #if not request.user.is_authenticated:
