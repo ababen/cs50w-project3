@@ -8,7 +8,9 @@ from django.views.generic.edit import CreateView
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import Orders, Pizza, Toppings
+from .models import Orders, Pizza, Toppings, OrderItems
+from .forms import OrderCreateForm
+from .cart import Cart
 
 def index(request):
     context = {
@@ -21,6 +23,7 @@ class SignUpView(CreateView):
     template_name = 'orders/signup.html'
     form_class = UserCreationForm
 
+# Used in an Ajax call on Signup.html/SignUpView to validate user onpage.
 def validate_username(request):
     username = request.GET.get('username', None)
     data = {
@@ -54,18 +57,8 @@ def logout_view(request):
 def register(request):
     return render(request, "orders/register.html")
 
+# Different method to create a user
 def adduser(request):
-    # registration = {}
-    # registration['email'] = request.POST["email"]
-    # registration['password'] = request.POST["password"]
-    # registration['lastname'] = request.POST["lastname"]
-    # registration['address'] = request.POST["address"]
-    # registration['city'] = request.POST["city"]
-    # registration['state'] = request.POST["state"]
-    # registration['zip'] = request.POST["zip"]
-    # registration['phonenumber'] = request.POST["phonenumber"]
-    # registration['username'] = request.POST["username"]
-
     #TypeError possible
 
     try:
@@ -88,16 +81,38 @@ def adduser(request):
 
     return render(request, "orders/index.html", context)
 
+# Needs to be DELETED
 def addtocart(request, cart):
     # if not request.user.is_authenticated:
     #    return render(request, "orders/login.html", {"message: None"})
     return render(request, "orders/error.html", {"message": cart})
 
+# Needs to be DELETED
 def cart(request):
     #if not request.user.is_authenticated:
     #    return render(request, "orders/login.html", {"message: None"})
     return render(request, "")
 
+def order_create(request):
+    cart = Cart(request)
+    if request.method == 'POST':
+        form = OrderCreateForm(request.POST)
+        if form.is_valid():
+            order = form.save()
+            for item in cart:
+                OrderItem.objects.create(
+                    order=order,
+                    product=item['product'],
+                    price=item['price'],
+                    quantity=item['quantity']
+                )
+            cart.clear()
+        return render(request, 'orders/created.html', {'order': order})
+    else:
+        form = OrderCreateForm()
+    return render(request, 'orders/create.html', {'form': form})
+
+# Shows Menu
 def pizza(request, pizza_id):
     #if not request.user.is_authenticated:
     #    return render(request, "orders/login.html", {"message: None"})
@@ -114,8 +129,8 @@ def pizza(request, pizza_id):
     return render(request, "orders/pizza.html", context)
 
 def order(request, order_id):
-    # if not request.user.is_authenticated:
-    #    return render(request, "orders/login.html", {"message: None"})
+    if not request.user.is_authenticated:
+        return render(request, "orders/login.html", {"message: None"})
     try:
         order = Orders.objects.get(pk=order_id)
     except Orders.DoesNotExist:
