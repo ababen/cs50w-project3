@@ -84,14 +84,28 @@ var generateCartList = function(product) {
     document.querySelector(".shopping-cart-list").appendChild(li);
   };
 
+Object.prototype.isEmpty = function() {
+    for(var key in this) {
+        if(this.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
 function addtocart() {
   var toppings = "None";
-  var cart = {"pizza_id": "{{ pizza.id }}", "pizza_price": "{{ pizza.large }}", "pizza_toppings": "toppings"};
+  var cart = {}
+  
+  if(cart.isEmpty()) {
+    cart[0] = {"pizza_id": "{{ pizza.id }}", "pizza_price": "{{ pizza.large }}", "pizza_toppings": "toppings"};
+  } else {
+    cart[1] = {"pizza_id": "{{ pizza.id }}", "pizza_price": "{{ pizza.large }}", "pizza_toppings": "toppings"};
+  }
+  console.log(cart);
+  
   var cart_json = JSON.stringify(cart);
   localStorage.setItem("cart", cart);
   localStorage.setItem("cart_json", cart_json);
-  alert("Ok");
-  return
   }
   // document.querySelector(".product-quantity").innerHTML = count;
   //  var product = document.forms[0];
