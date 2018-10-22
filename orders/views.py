@@ -12,6 +12,7 @@ from .models import Orders, Pizza, Toppings, OrderItems
 from .forms import OrderCreateForm
 from .cart import Cart
 
+
 def index(request):
     context = {
         "pizza": Pizza.objects.all().filter(category__contains='Pizza'),
@@ -19,9 +20,11 @@ def index(request):
     }
     return render(request, "orders/index.html", context)
 
+
 class SignUpView(CreateView):
     template_name = 'orders/signup.html'
     form_class = UserCreationForm
+
 
 # Used in an Ajax call on Signup.html/SignUpView to validate user onpage.
 def validate_username(request):
@@ -33,12 +36,14 @@ def validate_username(request):
         data['error_message'] = 'A user with this username already exists.'
     return JsonResponse(data)
 
+
 def login_view(request):
     # try:
     # username = request.POST["username"]
     # except KeyError:
     #    return render(request, "orders/login.html", {"message": "No username entered."})
-    return render(request, "orders/login.html", {"message":None})
+    return render(request, "orders/login.html", {"message": None})
+
 
 def login_action(request):
     username = request.POST["username"]
@@ -48,18 +53,21 @@ def login_action(request):
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "orders/login.html", {"message":"Invalid credentials."})
+        return render(request, "orders/login.html", {"message": "Invalid credentials."})
+
 
 def logout_view(request):
     logout(request)
     return render(request, "orders/login.html", {"message": "Loged out."})
 
+
 def register(request):
     return render(request, "orders/register.html")
 
+
 # Different method to create a user
 def adduser(request):
-    #TypeError possible
+    # TypeError possible
 
     try:
         user = User.objects.create_user(request.POST["username"], request.POST["email"], request.POST["password"])
@@ -81,17 +89,20 @@ def adduser(request):
 
     return render(request, "orders/index.html", context)
 
+
 # Needs to be DELETED
 def addtocart(request, cart):
     # if not request.user.is_authenticated:
     #    return render(request, "orders/login.html", {"message: None"})
     return render(request, "orders/error.html", {"message": cart})
 
+
 # Needs to be DELETED
 def cart(request):
-    #if not request.user.is_authenticated:
+    # if not request.user.is_authenticated:
     #    return render(request, "orders/login.html", {"message: None"})
     return render(request, "")
+
 
 def order_create(request):
     cart = Cart(request)
@@ -112,9 +123,10 @@ def order_create(request):
         form = OrderCreateForm()
     return render(request, 'orders/create.html', {'form': form})
 
+
 # Shows Menu
 def pizza(request, pizza_id):
-    #if not request.user.is_authenticated:
+    # if not request.user.is_authenticated:
     #    return render(request, "orders/login.html", {"message: None"})
     try:
         pizza = Pizza.objects.get(pk=pizza_id)
@@ -127,6 +139,7 @@ def pizza(request, pizza_id):
         "toppings": toppings
     }
     return render(request, "orders/pizza.html", context)
+
 
 def order(request, order_id):
     if not request.user.is_authenticated:
